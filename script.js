@@ -118,14 +118,16 @@ function Confirma() {
     votoConfirmado = true;
     votos.push({
       etapa: etapas[etapaAtual].titulo,
-      voto: "Branco",
+      numero: "Branco",
     });
   } else if (numeroDigitado.length === etapa.numeros) {
     votoConfirmado = true;
     votos.push({
       etapa: etapas[etapaAtual].titulo,
-      voto: numeroDigitado,
+      numero: numeroDigitado,
     });
+
+    atualizarPainelDeVotos();
   }
 
   if (votoConfirmado) {
@@ -137,9 +139,23 @@ function Confirma() {
         '<div class="aviso-gigante pisca">FIM!</div>';
     }
   }
-  console.log(votos);
 }
 
+function atualizarPainelDeVotos() {
+  let area_vereador = document.querySelector(".votos-vereador span");
+  let area_prefeito = document.querySelector(".votos-prefeito span");
+
+  area_vereador.innerHTML = "";
+  area_prefeito.innerHTML = "";
+
+  votos.forEach((voto) => {
+    if (voto.etapa === "VEREADOR") {
+      area_vereador.innerHTML += `${voto.numero}`;
+    } else if (voto.etapa === "PREFEITO") {
+      area_prefeito.innerHTML += `${voto.numero}`;
+    }
+  });
+}
 comecarEtapa();
 
 //Na ultima etapa ele chega no fim!
